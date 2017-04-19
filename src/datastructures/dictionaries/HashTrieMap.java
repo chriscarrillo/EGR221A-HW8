@@ -6,6 +6,7 @@ import egr221a.interfaces.misc.Dictionary;
 import egr221a.interfaces.trie.BString;
 import egr221a.interfaces.trie.TrieMap;
 import egr221a.interfaces.worklists.WorkList;
+import p2.clients.NGramTester;
 
 import java.util.AbstractMap;
 import java.util.Iterator;
@@ -18,14 +19,14 @@ import java.util.function.Supplier;
  * for method specifications.
  */
 public class HashTrieMap<A extends Comparable<A>, K extends BString<A>, V> extends TrieMap<A, K, V> {
-    public class HashTrieNode extends TrieNode<Dictionary<A, HashTrieNode>, HashTrieNode> {
+    public class HashTrieNode extends TrieNode<ChainingHashTable<A, HashTrieNode>, HashTrieNode> {
         public HashTrieNode() {
             this(null);
         }
 
         public HashTrieNode(V value) {
             Supplier<Dictionary<A, HashTrieNode>> newChain = () -> new MoveToFrontList();
-            this.pointers = new ChainingHashTable(newChain);
+            this.pointers = new ChainingHashTable<A, HashTrieNode>(newChain);
             this.value = value;
         }
 

@@ -4,9 +4,12 @@ import datastructures.worklists.ListFIFOQueue;
 import egr221a.datastructures.containers.Item;
 import egr221a.interfaces.misc.DeletelessDictionary;
 import egr221a.interfaces.misc.Dictionary;
+
 import egr221a.interfaces.misc.SimpleIterator;
 import egr221a.interfaces.worklists.WorkList;
 
+import java.util.Set;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.function.Supplier;
 
@@ -59,6 +62,38 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
             return null;
         }
         return table[index].find(key);
+    }
+
+    public boolean containsKey(K key){
+        int index = Math.abs(key.hashCode() % table.length);
+        if (table[index].find(key) == key) {
+            return true;
+        }
+        return false;
+    }
+
+    public V get(K key) {
+        int index = Math.abs(key.hashCode() % table.length);
+        if (table[index] == null) {
+            return null;
+        }
+        return table[index].find(key);
+    }
+
+    public Set<K> keySet() {
+        Set<K> keySet = new HashSet<K>();
+        for (Item<K, V> entry : this) {
+            keySet.add(entry.key);
+        }
+        return keySet;
+    }
+
+    public Set<V> values() {
+        Set<V> values = new HashSet<V>();
+        for (Item<K, V> entry : this) {
+            values.add(entry.value);
+        }
+        return values;
     }
 
     @Override
