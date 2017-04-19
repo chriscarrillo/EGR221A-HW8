@@ -38,19 +38,19 @@ public class QuickSort {
         }
     }
 
-    private static <E> int getMedian(E[] arr, int a, int b, int c, Comparator<E> comparator) {
-        if (verifyMedian(arr[a], arr[b], arr[c], comparator)) {
-            return b;
-        } else if (verifyMedian(arr[b], arr[a], arr[c], comparator)) {
-            return a;
+    private static <E> int getMedian(E[] arr, int alpha, int beta, int charlie, Comparator<E> comparator) {
+        if (verifyMedian(arr[alpha], arr[beta], arr[charlie], comparator)) {
+            return beta;
+        } else if (verifyMedian(arr[beta], arr[alpha], arr[charlie], comparator)) {
+            return alpha;
         } else {
-            return c;
+            return charlie;
         }
     }
 
-    private static <E> boolean verifyMedian(E a, E b, E c, Comparator<E> comparator) {
-        return (comparator.compare(a, b) < 0 && comparator.compare(b, c) < 0) ||
-                (comparator.compare(c, b) < 0 && comparator.compare(b, a) < 0);
+    private static <E> boolean verifyMedian(E alpha, E beta, E charlie, Comparator<E> comparator) {
+        return (comparator.compare(alpha, beta) < 0 && comparator.compare(beta, charlie) < 0) ||
+                (comparator.compare(charlie, beta) < 0 && comparator.compare(beta, alpha) < 0);
     }
 
     private static <E> void swap(E[] array, int a, int b) {
