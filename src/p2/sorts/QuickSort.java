@@ -46,12 +46,6 @@ public class QuickSort {
 
     private static <E> E median3(E[ ] a, int left, int right, Comparator<E> comparator) {
         int center = (left + right) / 2;
-        /*if (comparator.compare(a[left], a[right]) < 0 && comparator.compare(a[right], a[center]) < 0
-                || comparator.compare(a[center], a[right]) < 0 && comparator.compare(a[right], a[left]) < 0)
-            swap(a, left, right);
-        else if (comparator.compare(a[right], a[left]) < 0 && comparator.compare(a[left], a[center]) < 0 ||
-                comparator.compare(a[center], a[left]) < 0 && comparator.compare(a[left], a[right]) < 0)
-            swap(a, left, center);*/
         if (comparator.compare(a[center], a[left]) < 0)
             swap(a, left, center);
         if (comparator.compare(a[right], a[left]) < 0)
