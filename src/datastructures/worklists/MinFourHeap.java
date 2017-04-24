@@ -9,10 +9,10 @@ import java.util.NoSuchElementException;
  * See egr221a/interfaces/worklists/PriorityWorkList.java
  * for method specifications.
  */
-public class MinFourHeap<E extends Comparable<E>> extends PriorityWorkList<E> {
+public class MinFourHeap<E> extends PriorityWorkList<E> {
     /* Do not change the name of this field; the tests rely on it to work correctly. */
     private E[] data;
-    private static final int DEFAULT_CAPACITY = 21;
+    private static final int DEFAULT_CAPACITY = 256;
     private static final int CHILDREN = 4;
     private int size;
     private int level;
@@ -31,7 +31,7 @@ public class MinFourHeap<E extends Comparable<E>> extends PriorityWorkList<E> {
 
     @Override
     public void add(E work) {
-        if(size == data.length) {
+        if (size == data.length) {
             level++;
             E[] largerHeap = (E[]) new Object[(int) (data.length + Math.pow(CHILDREN, level))];
             for(int i = 0; i < data.length; i++) {
@@ -88,9 +88,8 @@ public class MinFourHeap<E extends Comparable<E>> extends PriorityWorkList<E> {
 
     @Override
     public void clear() {
-
-        E[] newData = (E[])new Object[DEFAULT_CAPACITY];
-        data = newData;
+        //E[] newData = (E[]) new Object[DEFAULT_CAPACITY];
+        data = (E[]) new Object[DEFAULT_CAPACITY];
         size = 0;
         level = 2;
     }

@@ -1,6 +1,7 @@
 import datastructures.dictionaries.ChainingHashTable;
 import datastructures.dictionaries.HashTrieMap;
 import datastructures.dictionaries.MoveToFrontList;
+import datastructures.worklists.MinFourHeap;
 import egr221a.datastructures.containers.Item;
 import egr221a.interfaces.misc.Dictionary;
 import egr221a.types.AlphabeticString;
@@ -12,6 +13,10 @@ import p2.sorts.QuickSort;
 import p2.sorts.TopKSort;
 import p2.wordsuggestor.NGramToNextChoicesMap;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Random;
 import java.util.function.Supplier;
 
 /**
@@ -31,6 +36,14 @@ public class Checkpoint2Tests {
             list.insert(key, 1 + find);
     }
 
+    private static Integer[] createArray(int size, int max) {
+        Integer[] numbers = new Integer[size];
+        Random r = new Random();
+        for (int i = 0; i < size; i++) {
+            numbers[i] = r.nextInt() % max;
+        }
+        return numbers;
+    }
 
     @Test
     public void Test1(){
@@ -120,16 +133,20 @@ public class Checkpoint2Tests {
     @Test
     public void quickSortTest1() {
         Integer[] array = {12, 4, 0, -23, -42, 87, 32, 19, -12, 7};
+        //Integer[] array = createArray(5, 100);
         Integer[] exp = {-42, -23, -12, 0, 4, 7, 12, 19, 32, 87};
+
         QuickSort.sort(array);
+        //System.out.println(Arrays.toString(array);
         Assert.assertArrayEquals(exp, array);
     }
 
-    /*@Test
+    @Test
     public void heapSortTest1() {
         Integer[] array = {12, 4, 0, -23, -42, 87, 32, 19, -12, 7};
         Integer[] exp = {-42, -23, -12, 0, 4, 7, 12, 19, 32, 87};
         HeapSort.sort(array);
+        //System.out.println(Arrays.toString(array));
         Assert.assertArrayEquals(exp, array);
     }
 
@@ -138,6 +155,7 @@ public class Checkpoint2Tests {
         Integer[] array = {12, 4, 0, -23, -42, 87, 32, 19, -12, 7};
         Integer[] exp = {-42, -23, -12, 0, 4, 7, 12, 19, 32, 87};
         TopKSort.sort(array, array.length);
+        //System.out.println(Arrays.toString(array));
         Assert.assertArrayEquals(exp, array);
-    }*/
+    }
 }
