@@ -3,7 +3,8 @@ package datastructures.dictionaries;
 import egr221a.datastructures.trees.BinarySearchTree;
 
 /**
- * TODO: Replace this comment with your own as appropriate.
+ * AVLTree.java extends BinarySearchTree. It constructs an AVLTree.
+ * It also overrides some of its parent methods (find and insert).
  *
  * AVLTree must be a subclass of BinarySearchTree<E> and must use
  * inheritance and callst o superclass methods to avoid unnecessary
@@ -29,12 +30,19 @@ import egr221a.datastructures.trees.BinarySearchTree;
  */
 
 public class AVLTree<K extends Comparable<K>, V> extends BinarySearchTree<K, V>  {
-    // TODO: Implement me!
-
+    /**
+     * Default constructor for AVLTree calls parent's constructor
+     */
     public AVLTree() {
         super();
     }
 
+    /**
+     * Finds with the given key and value
+     * @param key given key to find
+     * @param value given value to find
+     * @return BSTNode
+     */
     @Override
     protected BSTNode find(K key, V value){
         if(key == null){
@@ -44,6 +52,12 @@ public class AVLTree<K extends Comparable<K>, V> extends BinarySearchTree<K, V> 
         return super.find(key, value);
     }
 
+    /**
+     * Inserts data into the AVLTree with given key and given value
+     * @param key the key of the data that will be inserted
+     * @param value the value of the data that will be inserted
+     * @return the value inserted
+     */
     @Override
     public V insert(K key, V value) {
         if (key == null || value == null) {
@@ -56,6 +70,7 @@ public class AVLTree<K extends Comparable<K>, V> extends BinarySearchTree<K, V> 
         return oldValue;
     }
 
+    // Private helper method for inserting
     private AVLNode insert(AVLNode current, K key, V value) {
         if(current != null){
             int direction = Integer.signum(key.compareTo(current.key));
@@ -97,6 +112,11 @@ public class AVLTree<K extends Comparable<K>, V> extends BinarySearchTree<K, V> 
         }
     }
 
+    /**
+     * Gets the height of the given root
+     * @param root the root to be getting the height from
+     * @return an int that represents the height
+     */
     protected int height(BSTNode root) {
         return root == null ? -1 : ((AVLNode)root).getHeight();
     }
@@ -114,7 +134,7 @@ public class AVLTree<K extends Comparable<K>, V> extends BinarySearchTree<K, V> 
     }
 
     /**
-     * Will rotate dependent on the
+     * Will rotate dependent on the parent and childIndex
      * @param parent
      * @param childIndex
      * @return
@@ -131,6 +151,7 @@ public class AVLTree<K extends Comparable<K>, V> extends BinarySearchTree<K, V> 
         return temp;
     }
 
+    // Private helper method to get the difference of the height
     private int heightDifference(AVLNode current) {
         if (current == null) {
             return -1;
@@ -141,6 +162,7 @@ public class AVLTree<K extends Comparable<K>, V> extends BinarySearchTree<K, V> 
 
         return leftHeight - rightHeight;
     }
+
     public void checkBalance( ) {
         checkBalance(root);
     }

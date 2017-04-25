@@ -18,17 +18,29 @@ public class MinFourHeap<E> extends PriorityWorkList<E> {
     private int level;
     private Comparator<E> comparator;
 
-
+    /**
+     * Constructor to construct the MinFourHeap
+     * @param comparator used with the MFH
+     */
     public MinFourHeap(Comparator<E> comparator) {
         this.comparator = comparator;
         clear();
     }
 
+    /**
+     * Determines if the heap has work or not
+     * @return true if the heap has work
+     * @return false if the heap does not have work
+     */
     @Override
     public boolean hasWork() {
         return size != 0;
     }
 
+    /**
+     * Method to add work to the MinFourHeap
+     * @param work is the work to be added to the MinFourHeap
+     */
     @Override
     public void add(E work) {
         if (size == data.length) {
@@ -81,11 +93,17 @@ public class MinFourHeap<E> extends PriorityWorkList<E> {
         return temp;
     }
 
+    /**
+     * @return the size of the MinFourHeap
+     */
     @Override
     public int size() {
         return size;
     }
 
+    /**
+     * Called by the constructor. Part of the construction process of the MinFourHeap
+     */
     @Override
     public void clear() {
         //E[] newData = (E[]) new Object[DEFAULT_CAPACITY];
@@ -94,12 +112,14 @@ public class MinFourHeap<E> extends PriorityWorkList<E> {
         level = 2;
     }
 
+    // Private helper method to swap data
     private void swap(E[] data, int i, int j) {
         E temp = data[i];
         data[i] = data[j];
         data[j] = temp;
     }
 
+    // Private helper method that returns the minimum of the four
     private int findMinOfFour(E[] data, int i) {
         if(CHILDREN * i + 4 >= size) {
             if(CHILDREN * i + 1 >= size) {

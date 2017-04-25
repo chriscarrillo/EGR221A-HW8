@@ -8,13 +8,14 @@ import egr221a.interfaces.misc.Dictionary;
 import egr221a.interfaces.misc.SimpleIterator;
 import egr221a.interfaces.worklists.WorkList;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.function.Supplier;
 
 /**
- * TODO: Replace this comment with your own as appropriate.
+ * ChainingHashTable.java creates a new ChainingHashTable. It overrides insert, find, and iterator.
  * 1. You must implement a generic chaining hashtable. You may not
  *    restrict the size of the input domain (i.e., it must accept 
  *    any key) or the number of inputs (i.e., it must grow as necessary).
@@ -50,11 +51,18 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
         table[index].insert(key, value);
         if (size >= table.length) {
             primeIndex++;
-            rehash();
+            rehash(); // 376.6ms
+            //hashCode(); // 382.4ms
         }
         return oldValue;
     }
 
+    /**
+     * Returns the value of the given associated key
+     * @param key
+     *            the key whose associated value is to be returned
+     * @return value returns associated with the given key
+     */
     @Override
     public V find(K key) {
         int index = Math.abs(key.hashCode() % table.length);
@@ -64,6 +72,12 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
         return table[index].find(key);
     }
 
+    /**
+     * Returns true if the table contains the key given
+     * @param key the key the table may contain
+     * @return true if the table contains the key given
+     * @return false if the table does not contain the key given
+     */
     public boolean containsKey(K key){
         int index = Math.abs(key.hashCode() % table.length);
         if (table[index].find(key) == key) {
@@ -72,6 +86,11 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
         return false;
     }
 
+    /**
+     * Gets the value with the given key
+     * @param key the given key of the table
+     * @return the value of the given key
+     */
     public V get(K key) {
         int index = Math.abs(key.hashCode() % table.length);
         if (table[index] == null) {
@@ -80,6 +99,10 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
         return table[index].find(key);
     }
 
+    /**
+     * keySet returns a Set of all of the keys in the table
+     * @return a set of all the keys in the table
+     */
     public Set<K> keySet() {
         Set<K> keySet = new HashSet<K>();
         for (Item<K, V> entry : this) {
@@ -88,6 +111,10 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
         return keySet;
     }
 
+    /**
+     * values returns a Set of all values of the table
+     * @return a Set of all the values in the table
+     */
     public Set<V> values() {
         Set<V> values = new HashSet<V>();
         for (Item<K, V> entry : this) {
@@ -131,6 +158,10 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
         }
 
     }
+
+    /**
+     * Hash function that rehashes the table
+     */
     private void rehash() {
         Dictionary<K, V>[] newTable = new Dictionary[PRIMES[primeIndex]];
         for (Item<K, V> item : this) {
@@ -141,6 +172,26 @@ public class ChainingHashTable<K, V> extends DeletelessDictionary<K, V> {
             newTable[index].insert(item.key, item.value);
         }
         table = newTable;
-
     }
+
+    /*@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ChainingHashTable<?, ?> that = (ChainingHashTable<?, ?>) o;
+
+        if (primeIndex != that.primeIndex) return false;
+        if (newChain != null ? !newChain.equals(that.newChain) : that.newChain != null) return false;
+        // Probably incorrect - comparing Object[] arrays with Arrays.equals
+        return Arrays.equals(table, that.table);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = newChain != null ? newChain.hashCode() : 0;
+        result = 31 * result + Arrays.hashCode(table);
+        result = 31 * result + primeIndex;
+        return result;
+    }*/
 }
